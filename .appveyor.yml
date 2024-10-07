@@ -1,11 +1,9 @@
 version: '2.0.1+{build}'
 
 image:
-  - macos
-  - macos-bigsur
-  - Ubuntu
-  - Ubuntu2004
-  - Visual Studio 2017
+  - macos-sonoma
+  - Ubuntu2204
+  - Visual Studio 2022
 
 configuration: Release
 
@@ -20,13 +18,13 @@ for:
   -
     matrix:
       only:
-        - image: macos
+        - image: macos-sonoma
     before_build:
       - uname -a
       - cmake --version
       - clang++ --version
     build_script:
-      - cmake -B build -DCMAKE_PREFIX_PATH=${HOME}/Qt/5.14/clang_64 -DCMAKE_INSTALL_PREFIX=`pwd`/local -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DPACKAGE_SYSTEM_DISTRIBUTION=osx-catalina
+      - cmake -B build -DCMAKE_PREFIX_PATH=${HOME}/Qt/6.6/macos -DCMAKE_INSTALL_PREFIX=`pwd`/local -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DPACKAGE_SYSTEM_DISTRIBUTION=osx-sonoma
       - cmake --build build
       - (cd build ; cpack --verbose -G DragNDrop)
     artifacts:
@@ -35,25 +33,10 @@ for:
   -
     matrix:
       only:
-        - image: macos-bigsur
-    before_build:
-      - uname -a
-      - cmake --version
-      - clang++ --version
-    build_script:
-      - cmake -B build -DCMAKE_PREFIX_PATH=${HOME}/Qt/5.14/clang_64 -DCMAKE_INSTALL_PREFIX=`pwd`/local -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DPACKAGE_SYSTEM_DISTRIBUTION=osx-bigsur
-      - cmake --build build
-      - (cd build ; cpack --verbose -G DragNDrop)
-    artifacts:
-      - path: build/vhf-sim-*.dmg
-
-  -
-    matrix:
-      only:
-        - image: Visual Studio 2017
+        - image: Visual Studio 2022
     environment:
-      QTHOME: C:\Qt\5.12\mingw73_64
-      QT_TOOLS_PATH: C:\Qt\Tools\mingw730_64\bin
+      QTHOME: C:\Qt\6.7\mingw_64
+      QT_TOOLS_PATH: C:\Qt\Tools\mingw810_32\bin
       GENERATOR: "MinGW Makefiles"
     before_build:
       - cmd: set PATH=%QT_TOOLS_PATH%;%PATH%
@@ -68,26 +51,12 @@ for:
   -
     matrix:
       only:
-        - image: Ubuntu2004
+        - image: Ubuntu2204
     before_build:
       - sh: sudo apt-get update
-      - sh: sudo apt-get install -qq qt5-default qtmultimedia5-dev qttools5-dev qttools5-dev-tools
+      - sh: sudo apt-get install -qq qt6-base-dev qt6-multimedia-dev qt6-base-dev-tools qt6-tools-dev-tools
     build_script:
       - sh: cmake -B build -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DPACKAGE_SYSTEM_DISTRIBUTION=ubuntu2004
-      - sh: cmake --build build
-      - sh: (cd build ; cpack -G DEB)
-    artifacts:
-      - path: build/vhf-sim-*.deb
-
-  -
-    matrix:
-      only:
-        - image: Ubuntu
-    before_build:
-      - sh: sudo apt-get update
-      - sh: sudo apt-get install -qq qt5-default qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-    build_script:
-      - sh: cmake -B build -DCMAKE_BUILD_TYPE=${CONFIGURATION} -DPACKAGE_SYSTEM_DISTRIBUTION=ubuntu1804
       - sh: cmake --build build
       - sh: (cd build ; cpack -G DEB)
     artifacts:
