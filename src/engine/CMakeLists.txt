@@ -21,7 +21,7 @@ target_include_directories(engine
 	PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}/..
 	PRIVATE
-		${Qt5Core_INCLUDE_DIRS}
+		${Qt6Core_INCLUDE_DIRS}
 	)
 
 target_link_libraries(engine

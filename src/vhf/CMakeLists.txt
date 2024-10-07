@@ -1,4 +1,4 @@
-qt5_add_translation(QM_FILES ${TRANSLATION_FILES})
+qt6_add_translation(QM_FILES ${TRANSLATION_FILES})
 
 add_executable(vhf-sim WIN32 MACOSX_BUNDLE)
 
@@ -86,20 +86,20 @@ target_compile_options(vhf-sim
 	PRIVATE
 		-Wall
 		-Wextra
-		${Qt5Core_EXECUTABLE_COMPILE_FLAGS}
-		${Qt5Gui_EXECUTABLE_COMPILE_FLAGS}
-		${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}
-		${Qt5Multimedia_EXECUTABLE_COMPILE_FLAGS}
+		${Qt6Core_EXECUTABLE_COMPILE_FLAGS}
+		${Qt6Gui_EXECUTABLE_COMPILE_FLAGS}
+		${Qt6Widgets_EXECUTABLE_COMPILE_FLAGS}
+		${Qt6Multimedia_EXECUTABLE_COMPILE_FLAGS}
 	)
 
 target_include_directories(vhf-sim
 	PRIVATE
 		${CMAKE_CURRENT_BINARY_DIR}
 		${CMAKE_CURRENT_BINARY_DIR}/..
-		${Qt5Core_INCLUDE_DIRS}
-		${Qt5Gui_INCLUDE_DIRS}
-		${Qt5Widgets_INCLUDE_DIRS}
-		${Qt5Multimedia_INCLUDE_DIRS}
+		${Qt6Core_INCLUDE_DIRS}
+		${Qt6Gui_INCLUDE_DIRS}
+		${Qt6Widgets_INCLUDE_DIRS}
+		${Qt6Multimedia_INCLUDE_DIRS}
 	)
 
 target_link_libraries(vhf-sim
@@ -107,11 +107,11 @@ target_link_libraries(vhf-sim
 		nmea
 		engine
 		lua
-		Qt5::Core
-		Qt5::Widgets
-		Qt5::Gui
-		Qt5::Multimedia
-		Qt5::Network
+		Qt6::Core
+		Qt6::Widgets
+		Qt6::Gui
+		Qt6::Multimedia
+		Qt6::Network
 	)
 
 install(

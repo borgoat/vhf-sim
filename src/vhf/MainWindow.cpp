@@ -357,7 +357,7 @@ void MainWindow::on_about()
 {
 	QString authors;
 	for (auto const & author :
-		QString {version::git_authors()}.split(";", QString::SkipEmptyParts)) {
+		QString {version::git_authors()}.split(";", Qt::SkipEmptyParts)) {
 		authors += "\n- " + author;
 	}
 

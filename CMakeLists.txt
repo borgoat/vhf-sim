@@ -50,12 +50,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/share/${PROJECT_NAME}/lang)
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Multimedia REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui Multimedia Network LinguistTools)
 
 ### internationalization
 set(TRANSLATION_FILES
@@ -65,7 +60,7 @@ set(TRANSLATION_FILES
 add_custom_target(language-update)
 foreach(filename ${TRANSLATION_FILES})
 	add_custom_command(TARGET language-update PRE_BUILD
-		COMMAND ${Qt5_LUPDATE_EXECUTABLE} -no-obsolete -recursive ${CMAKE_CURRENT_SOURCE_DIR}/src -ts ${filename}
+		COMMAND ${Qt6_LUPDATE_EXECUTABLE} -no-obsolete -recursive ${CMAKE_CURRENT_SOURCE_DIR}/src -ts ${filename}
 		)
 endforeach()
 
